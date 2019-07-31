@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+		<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"  type="text/css">
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+		<script src="https://code.jquery.com/jquery.js"></script>
+		<script src="{{ url_for('static', filename='js/index.js') }}" ></script>
+
+		<title>PyBurger</title>
+	</head>
+	<body data-spy="scroll" data-target=".navbar" data-offset="50">
+
+	<nav class="navbar navbar-light bg-light top-nav">
+
+		<a class="navbar-brand" href="#"  alt="">
+		<img src="{{ url_for('static', filename='images/small_logo.png') }}"  alt=""/>
+			<span class="navbar-text top-navText" style="color: #97cc46; margin-right:0;">
+				BURGER
+			</span>
+            <span class="navbar-text top-navText" style="margin-left: 0; color:black">
+				PY
+			</span>
+		</a>
+		<div class="collapse navbar-collapse" id="navbarText">
+			<a class="navbar-text nav-item" href="#">Find your nearest location</a>
+  		</div>
+
+	</nav>
+
+    {% block content %}
+	<div class="container-fluid main">
+    <div class="jumbotron jumbotron-fluid">
+    <div class="container">
+        <img class="center-img" src="{{ url_for('static', filename='images/large_logo.png') }}">
+        <h1 class="burger-add">Add a New Burger</h1>
+            <form class="new-burger" action="/burger/new" method="post">
+                <div class="form-group">
+                    <label for="burger"></label>
+                    <input type="text" id="burger" name="burger" placeholder="Burger Name">
+                </div>
+            <button id="burger-submit" type="submit">Add Burger</button>
+            </form>
+    </div>
+    </div>
+
+	<nav class="navbar" id="stickyNav">
+        <a href="#section1">Uneaten Burgers</a>
+        <a href="#section2">Eaten Burgers</a>
+    </nav>
+
+
+	<div id="section1" class="jumbotron jumbotron-fluid">
+    <h2>Uneaten Burgers</h2>
+    <div class="row eaten-burgers">
+    <div class="card-columns">
+            {% for burger in burgers %}
+                {% if burger.eaten == False %}
+                <div class="card burgDiv">
+                    <img class="card-img-top" src="{{ url_for('static', filename='images/burger.jpg') }}">
+                    <div class="card-body">
+                    <h4 class="card-title">{{ burger.name }}</h4>
+
+                    <form class="update-burger" action="/burger/{{ burger._id }}" method="post">
+                    <button class="change-status" data-id="{{ burger._id }}" data-status="{{ burger.eaten }}">
+                        Eat the Burger!
+                    </button>
+                    </form>
+                    </div>
+                </div>
+                {% endif %}
+            {% endfor %}
+    </div>
+    </div>
+    </div>
+
+    <div id="section2" class="jumbotron jumbotron-fluid">
+    <h2>Eaten Burgers</h2>
+    <div class="row eaten-burgers">
+    <div class="card-columns">
+
+            {% for burger in burgers %}
+                {% if burger.eaten == True %}
+                <div class="card burgDiv">
+                    <img class="card-img-top" src="{{ url_for('static', filename='images/burger.jpg') }}">
+                    <div class="card-body">
+                    <h4 class="card-title">{{ burger.name }}</h4>
+
+                    </div>
+                </div>
+                {% endif %}
+            {% endfor %}
+
+    </div>
+    </div>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+<script src="{{ url_for('static', filename='js/index.js') }}"></script>
+    {% endblock %}
+
+<footer class="footer">
+    <p>Libby Duggan 2019</p>
+
+
+</footer>
