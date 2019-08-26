@@ -6,7 +6,7 @@ A silly flask app that lets you create, view, and eat burgers.
 
 ### Link to Website
 
-www.bibliofile.com
+www.burgerpy.tk
 
 ### Technologies Used
 
